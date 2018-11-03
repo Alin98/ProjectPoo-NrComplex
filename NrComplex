@@ -1,0 +1,428 @@
+#include <iostream>
+
+using namespace std;
+class complex
+{
+private:
+    double a, b;
+public:
+    double getReal();
+    double getImg() ;
+    void setReal(double Re);
+    void setImg(double Im);
+
+    complex(double r=0, double i=0): a(r),b(i) {}
+    void read();
+    void afisare();
+    //friend complex string operator(complex c);
+    friend complex operator+(const complex& z);
+    friend complex operator-(const complex& z);
+    friend complex operator+(const complex& z,const complex& c);
+    friend complex operator-(const complex& z,const complex& c);
+    friend complex operator+(const complex& z,const double c);
+    friend complex operator+(const double z,const complex& c);
+    friend complex operator-(const complex& z,const double c);
+    friend complex operator-(const double z,const complex& c);
+    friend complex operator*(const complex& z,const complex& c);
+    friend complex operator*(const complex& z,const double c);
+    friend complex operator*(const double z,const complex&c);
+    friend complex operator/(const complex&z,const complex&c);
+    friend complex operator/(const complex& z,const double c);
+    friend complex operator/(const double z,const complex&c);
+    friend complex operator^(complex&z, int n);
+    friend complex operator!=(const complex& z, const complex& c);
+    friend complex operator ==(const complex&z, const complex& c);
+    friend complex operator =(complex& z,complex& c);
+    friend complex operator+=( const complex& z,const complex& c);
+    friend complex operator+=(complex& z, const double c);
+    friend complex operator-=(const complex& z, const complex& c);
+    friend complex operator-=(complex& z, const double c);
+//    friend complex operator abs(complex& z);
+//    friend complex& operator sqrt(complex& c);
+};
+/*complex string operator(complex c)
+{
+    string result;
+    if(a<0)
+    result=result+"-"+abs(a);
+    if(a>0)
+    result=result+"+"+abs(0);
+    if(b<0)
+    result=result+"-"+abs(b);
+    if(b!=-1)
+    result=result+"i";
+    if(b>0)
+    {
+        if(b!=1)
+        {
+        result=result+"+"+abs(b);
+        result=result+"i";
+        }
+    }
+    return result;
+}*/
+double complex::getReal()
+{
+    return a;
+}
+double complex::getImg()
+{
+    return b;
+}
+void complex::setReal(double Re)
+{
+    a = Re;
+}
+void complex::setImg(double Im)
+{
+    b = Im;
+}
+
+void complex::read()
+{
+    cout<<"Real: ";
+    cin>>a;
+    cout<<"Img: ";
+    cin>>b;
+    cout<<endl;
+}
+
+void complex::afisare()
+{
+    if (a == 0)
+    {
+        if(b == 0)
+            cout<<"0";
+        else if(b == 1)
+            cout<<"i";
+        else if (b == -1)
+            cout<<"-i";
+        else
+        {
+            if(b > 0)
+                cout<<b<<"*i";
+            else
+                cout<<b<<"*i";
+        }
+    }
+    else if(a > 0)
+    {
+        if(b == 0)
+            cout<<a;
+        else if(b == 1)
+            cout<<a<<"+i";
+        else if (b == -1)
+            cout<<a<<"-i";
+        else
+        {
+            if(b>0)
+                cout<<a<<"+"<<b<<"*i";
+            else
+                cout<<a<<b<<"*i";
+        }
+    }
+    else if(a<0)
+    {
+        if(b == 0)
+            cout<<a;
+        else if(b == 1)
+            cout<<a<<"+i";
+        else if (b== -1)
+            cout<<a<<"-i";
+        else
+        {
+            if(b>0)
+            cout<<a<<"+"<<b<<"*i";
+            else
+                cout<<a<<b<<"*i";
+        }
+    }
+}
+
+
+
+   /* complex operator double ||(complex& z)
+    {
+        double re = z.getReal()*z.getReal();
+        double im = z.getImg()*z.getImg();
+        return sqrt(re+im);
+    }
+    complex operator sqrt(complex& c)
+    {
+        complex z;
+        double re=sqrt((c.getReal() + abs(c)) / 2);
+        double im;
+        if(c.getImaginar()<0)
+            im=(-1)*sqrt((-(c.getReal()) +abs(c)) / 2);
+        else
+            im= sqrt((-(c.getReal()) +abs(c)) / 2);
+            z.a=re;
+            z.b=im;
+        return z;
+    } */
+complex operator+(const complex& z)
+{
+    cout<<"+Complex\n";
+    return complex(z.a,z.b);
+}
+complex operator-(const complex& z)
+{
+    cout<<"-Complex\n";
+    return complex(-z.a,-z.b);
+}
+complex operator+(const complex&z,const complex&c)
+{
+    cout<<"Adunare:\n";
+    return complex(z.a+c.a,z.b+c.b);
+}
+complex operator-(const complex&z,const complex&c)
+{
+    cout<<"Scadere:\n";
+    return complex(z.a-c.a,z.b-c.b);
+}
+complex operator+(const complex&z,const double c)
+{
+    cout<<"Adunare db1:\n";
+    return complex(z.a+c,z.b);
+}
+complex operator+(const double z,const complex& c)
+{
+    cout<<"Adunare db2:\n";
+    return complex(z+c.a,c.b);
+}
+complex operator-(const complex& z,const double c)
+{
+    cout<<"Scadere db1:\n";
+    return complex(z.a-c,z.b);
+}
+complex operator-(const double z,const complex& c)
+{
+    cout<<"Scadere db2:\n";
+    return complex(z-c.a,c.b);
+}
+complex operator*(const complex& z,const complex& c)
+{
+    cout<<"Inmultire:\n";
+    return complex(z.a*c.a-z.b*c.b,z.a*c.b+z.b*c.a);
+}
+complex operator*(const complex& z,const double c)
+{
+    cout<<"Inmultire db1:\n";
+    return complex(z.a*c,z.b*c);
+}
+complex operator*(const double z,const complex&c)
+{
+    cout<<"Inmultire db2:\n";
+    return complex(c.a*z,c.b*z);
+}
+complex operator/(const complex& z,const complex& c)
+{
+    cout<<"Impartire:\n";
+    if(c.a==0 && c.b==0)
+    {
+        cout <<"Nu se poate";
+        return 0;
+    }
+    return complex((z.a*c.a+z.b*c.b)/(c.a*c.a+c.b*c.b),(z.b*c.a-z.a*c.b)/(c.a*c.a+c.b*c.b));
+}
+complex operator/(const complex& z,const double c)
+{
+    cout<<"Impartire d1:\n";
+    if(c==0)
+    {
+        cout<<"Imaprtire la 0 "<<" ";
+        return 0;
+    }
+    return complex(z.a/c,z.b/c);
+}
+complex operator/(const double z,const complex&c)
+{
+    cout<<"Impartire db2:\n";
+    if(c.a==0 && c.b==0)
+    {
+        cout<<"Nu se poate efectua impartirea numarului";
+        return 0;
+    }
+    return complex((z*c.a)/(c.a*c.a+c.b*c.b),(-z*c.b)/(c.a*c.a+c.b*c.b));
+}
+complex operator^(complex&z, int n)
+{
+    int i;
+    complex aux;
+    aux=z;
+    if(n==0)
+    {
+        aux.a=1;
+        aux.b=0;
+    }
+    else
+        for(i=1; i<n; i++)
+            aux=z*aux;
+    return aux;
+}
+complex operator!=(const complex &z,const complex& c)
+{
+    if(c.a!=z.a && c.b!=z.b)
+        cout<<"Numere complexe diferite"<<endl;
+    else cout<<"Sunt egale";
+    cout<<endl;
+}
+complex operator==(const complex &z,const complex& c)
+{
+    if(c.a==z.a && c.b==z.b)
+        cout<<"Numere complexe egale";
+    else cout<<"Nu sunt egale";
+    cout<<endl;
+}
+complex operator =(complex& z, complex& c);
+{
+    cout<<"Operator =";
+    return complex(z.a=c.a,z.b=c.b);
+}
+complex operator+=(const complex& z,const complex& c)
+{
+    cout<<"Operator +=";
+    return complex(z.a+c.a, z.b+c.b);
+}
+
+complex operator+=(complex&z,const double c)
+{
+    cout<<"Adunare db1:\n";
+    return complex(z.a+c,z.b+c);
+}
+
+complex operator-=(const complex& z, const complex& c)
+{
+    cout<<"Operator -=";
+    return complex(z.a-c.a,z.b-c.b);
+}
+complex operator-=(complex&z,const double c)
+{
+    cout<<"Scadere db4:\n";
+    return complex(z.a-c,z.b-c);
+}
+complex operator*=(const complex& z,const complex& c)
+{
+    cout<<"Inmultire +=";
+    return complex (z.a*c.a-z.b*c.b,z.a*c.b+z.b*c.a);
+}
+
+complex operator*=(complex&z,const double c)
+{
+    cout<<"Inmultire db1:\n";
+    return complex(z.a*c,z.b*c);
+}
+{
+    complex z1;
+    z1.read();
+    complex z2;
+    z2.read();
+    complex z3;
+    z3=+(z1);
+    z3.afisare();
+    cout<<endl;
+    complex z4;
+    z4=-(z1);
+    z4.afisare();
+    cout<<endl;
+    complex z5;
+    z5=z1+z2;
+    z5.afisare();
+    cout<<endl;
+    complex z6;
+    z6=z1-z2;
+    z6.afisare();
+    cout<<endl;
+    complex z7;
+    double k1;
+    cout<<"double1=";
+    cin>>k1;
+    z7=z1+k1;
+    z7.afisare();
+    cout<<endl;
+    complex z8;
+    double k2;
+    cout<<"double2=";
+    cin>>k2;
+    z8=k2+z1;
+    z8.afisare();
+    cout<<endl;
+    complex z9;
+    z9=z1-k1;
+    z9.afisare();
+    cout<<endl;
+    complex z10;
+    z10=k2-z1;
+    z10.afisare();
+    cout<<endl;
+    complex z11;
+    z11=z1*z2;
+    z11.afisare();
+    cout<<endl;
+    complex z12;
+    z12=z1*k1;
+    z12.afisare();
+    cout<<endl;
+    complex z13;
+    z13=k2*z1;
+    z13.afisare();
+    cout<<endl;
+    complex z14;
+    z14=z1/z2;
+    z14.afisare();
+    cout<<endl;
+    complex z15;
+    z15=z1/k1;
+    z15.afisare();
+    cout<<endl;
+    complex z16;
+    z16=k2/z1;
+    z16.afisare();
+    cout<<endl;
+    complex z17;
+    int n;
+    cout<<"Puterea este:";
+    cin>>n;
+    cout<<endl;
+    z17=z1^n;
+    z17.afisare();
+    cout<<endl;
+    complex z18;
+    z18=(z1!=z2);
+    complex z19;
+    z19=(z1==z2);
+    /*complex z20;
+    z20=z1;
+    z20.afisare();*/
+    complex z25;
+    z25=(z1=z2);
+    z25.afisare();
+    cout<<endl;
+    complex z21;
+    z21=(z1+=z2);
+   z21.afisare();
+   cout<<endl;
+   complex z22;
+    double k3;
+    cout<<"double1=";
+    cin>>k3;
+    z22=z1+k3;
+    z22.afisare();
+    cout<<endl;
+    complex z23;
+    z23=(z1-=z2);
+    z23.afisare();
+    cout<<endl;
+    complex z24;
+    double k4;
+    cout<<"double4=";
+    cin>>k4;
+    z24=z1-k3;
+    z24.afisare();
+    cout<<endl;
+
+    //complex z21;
+    //z21=(z1-=z2);
+    return 0;
+}
+
